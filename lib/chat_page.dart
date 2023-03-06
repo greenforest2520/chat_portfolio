@@ -86,43 +86,43 @@ class _ChatPageState extends State<ChatPage> {
                                                         TalkRoomPage(
                                                             talkRooms[index])));
                                           },
-                                          onLongPress: () {
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return AlertDialog(
-                                                    title: const Text("削除します"),
-                                                    content: const Text(
-                                                        "トーク履歴も\n削除されます。\nよろしいですか？"),
-                                                    actions: [
-                                                      TextButton(
-                                                          onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: const Text(
-                                                              "CANCEL")),
-                                                      TextButton(
-                                                          onPressed: () async {
-                                                            await model
-                                                                .deleteRoom(
-                                                                    talkRooms[
-                                                                        index]);
-                                                            if (!mounted)
-                                                              return;
-                                                            Navigator.pop(
-                                                                context);
-                                                            // print("ログアウトタップ");
-                                                            // print(model.role);
+                                          // onLongPress: () {
+                                          //   showDialog(
+                                          //       context: context,
+                                          //       builder: (context) {
+                                          //         return AlertDialog(
+                                          //           title: const Text("削除します"),
+                                          //           content: const Text(
+                                          //               "トーク履歴も\n削除されます。\nよろしいですか？"),
+                                          //           actions: [
+                                          //             TextButton(
+                                          //                 onPressed: () {
+                                          //                   Navigator.pop(
+                                          //                       context);
+                                          //                 },
+                                          //                 child: const Text(
+                                          //                     "CANCEL")),
+                                          //             TextButton(
+                                          //                 onPressed: () async {
+                                          //                   await model
+                                          //                       .deleteRoom(
+                                          //                           talkRooms[
+                                          //                               index]);
+                                          //                   if (!mounted)
+                                          //                     return;
+                                          //                   Navigator.pop(
+                                          //                       context);
+                                          //                   // print("ログアウトタップ");
+                                          //                   // print(model.role);
 
-                                                            // print(SharedPrefs.fetchUid());
-                                                          },
-                                                          child:
-                                                              const Text("OK"))
-                                                    ],
-                                                  );
-                                                });
-                                          },
+                                          //                   // print(SharedPrefs.fetchUid());
+                                          //                 },
+                                          //                 child:
+                                          //                     const Text("OK"))
+                                          //           ],
+                                          //         );
+                                          //       });
+                                          // },
                                           child: SizedBox(
                                             height: 70,
                                             child: Row(
