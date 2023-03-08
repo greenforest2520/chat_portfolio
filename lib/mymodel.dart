@@ -16,10 +16,16 @@ class MyModel extends ChangeNotifier {
   final uid = SharedPrefs.fetchUid();
   final stringUid = SharedPrefs.fetchUid().toString();
 
+ 
+
   void trueResult() {
     result = true;
     notifyListeners();
   }
+
+ 
+
+ 
 
   Future createRoom(String selectUser) async {
     final check1 = await FirebaseFirestore.instance
@@ -49,5 +55,11 @@ class MyModel extends ChangeNotifier {
       print("失敗$result");
       return result = false;
     }
+  }
+
+  Future deleteRoom(TalkRoom talkRoom) async {
+    final roomId = talkRoom.roomId;
+    print("ルームID$roomId");
+    await FirebaseFirestore.instance.collection("room").doc(roomId).delete();
   }
 }

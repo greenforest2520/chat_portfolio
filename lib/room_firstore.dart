@@ -1,10 +1,11 @@
 import 'package:chat_portfolio/shared_prefs.dart';
 import 'package:chat_portfolio/talk_room.dart';
 import 'package:chat_portfolio/user.dart';
-
 import 'package:chat_portfolio/user_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+
 
 class RoomFirestore {
   static final FirebaseFirestore _firebaseFirestoreInstance =
@@ -14,11 +15,8 @@ class RoomFirestore {
       .where("joind_user_ids", arrayContains: SharedPrefs.fetchUid())
       .snapshots();
   final String talkUserUid = "";
-
-  static Future<void> createRoom() async {
+  static Future<void> createRoom(String myuid) async {
     try {
-      final userCredential = await FirebaseAuth.instance.signInAnonymously();
-      final myuid = userCredential.user!.uid;
       final docs = await UserFirestore.fetchUsers();
       if (docs == null) return;
       docs.forEach((doc) async {
@@ -32,7 +30,7 @@ class RoomFirestore {
         });
       });
     } catch (e) {
-      print("ルームの作成失敗==== $e");
+      //print("ルームの作成失敗==== $e");
     }
   }
 
@@ -40,8 +38,8 @@ class RoomFirestore {
       QuerySnapshot snapshot) async {
     try {
       String myuid = SharedPrefs.fetchUid()!;
-      print("フェッチしたuid");
-      print(myuid);
+      //print("フェッチしたuid");
+      //print(myuid);
 
       final snapshot = await _roomCollection
           .where("joind_user_ids", arrayContains: myuid)
@@ -54,15 +52,15 @@ class RoomFirestore {
 
         late String talkUserUid;
         for (var id in userids) {
-          print("ユーザー情報のデータ");
-          print(id);
+          //print("ユーザー情報のデータ");
+          //print(id);
           if (id == myuid) continue;
           talkUserUid = id;
         }
-        print("自分以外のトークユーザーユーザ一UID");
-        print(talkUserUid);
+        //print("自分以外のトークユーザーユーザ一UID");
+        //print(talkUserUid);
 
-        var talkUser = await UserFirestore.fetchProfile(talkUserUid);
+        UserInfo? talkUser = await UserFirestore.fetchProfile(talkUserUid);
 
         if (talkUser == null) return null;
         final talkRoom = TalkRoom(
@@ -73,11 +71,11 @@ class RoomFirestore {
         );
 
         talkRooms.add(talkRoom);
-        print("------読み込み完了-----");
+        //print("------読み込み完了-----");
       }
       return talkRooms;
     } catch (e) {
-      print("参加ルームの取得失敗==$e");
+      //print("参加ルームの取得失敗==$e");
       return null;
     }
   }
